@@ -163,15 +163,16 @@ template_html = """
 
 <script>
 const datosMarca = {
-    volkswagen: { auto: "/static/volkswagen_auto.jpg", velocidad: "210 km/h", capacidad: "5 personas", ventas: "6 millones/año", info: "Fundada en 1937." },
-    toyota: { auto: "/static/toyota_auto.jpg", velocidad: "180 km/h", capacidad: "5 personas", ventas: "Líder mundial 2023", info: "Fundada por Kiichiro Toyoda." },
-    lamborghini: { auto: "/static/lamborghini_auto.jpg", velocidad: "350 km/h", capacidad: "2 personas", ventas: "8.405 en 2023", info: "Fundada en 1963." },
-    ferrari: { auto: "/static/ferrari_auto.jpg", velocidad: "340 km/h", capacidad: "2 personas", ventas: "13.221 en 2023", info: "Fundada por Enzo Ferrari." },
-    ford: { auto: "/static/ford_auto.jpg", velocidad: "200 km/h", capacidad: "5 personas", ventas: "4 millones/año", info: "Fundada en 1903." },
-    chevrolet: { auto: "/static/chevrolet_auto.jpg", velocidad: "220 km/h", capacidad: "5 personas", ventas: "2.3 millones en 2023", info: "Chevy clásico." },
-    pagani: { auto: "/static/pagani_auto.jpg", velocidad: "383 km/h", capacidad: "2 personas", ventas: "Muy pocos", info: "Zonda y Huayra." },
-    bugatti: { auto: "/static/bugatti_auto.jpg", velocidad: "420 km/h", capacidad: "2 personas", ventas: "Limitados", info: "Veyron y Chiron." }
+    volkswagen: { auto: "/static/volkswagen.jpg", velocidad: "210 km/h", capacidad: "5 personas", ventas: "6 millones/año", info: "Fundada en 1937." },
+    toyota: { auto: "/static/toyota.jpg", velocidad: "180 km/h", capacidad: "5 personas", ventas: "Líder mundial 2023", info: "Fundada por Kiichiro Toyoda." },
+    lamborghini: { auto: "/static/lamborghini.jpg", velocidad: "350 km/h", capacidad: "2 personas", ventas: "8.405 en 2023", info: "Fundada en 1963." },
+    ferrari: { auto: "/static/ferrari.jpg", velocidad: "340 km/h", capacidad: "2 personas", ventas: "13.221 en 2023", info: "Fundada por Enzo Ferrari." },
+    ford: { auto: "/static/ford.jpg", velocidad: "200 km/h", capacidad: "5 personas", ventas: "4 millones/año", info: "Fundada en 1903." },
+    chevrolet: { auto: "/static/chevrolet.jpg", velocidad: "220 km/h", capacidad: "5 personas", ventas: "2.3 millones en 2023", info: "Chevy clásico." },
+    pagani: { auto: "/static/pagani.jpg", velocidad: "383 km/h", capacidad: "2 personas", ventas: "Muy pocos", info: "Zonda y Huayra." },
+    bugatti: { auto: "/static/bugatti.jpg", velocidad: "420 km/h", capacidad: "2 personas", ventas: "Limitados", info: "Veyron y Chiron." }
 };
+
 
 function mostrar(id) {
     document.querySelectorAll('.pantalla').forEach(p => p.classList.remove('visible'));

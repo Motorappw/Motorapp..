@@ -1,76 +1,152 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Información de {{ marca|capitalize }}</title>
+    <title>Motorapp - Información</title>
     <style>
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: black;
+            color: white;
         }
-        .logo-fondo {
-            background-image: url("{{ url_for('static', filename=marca + '.png') }}");
-            background-repeat: no-repeat;
-            background-size: contain;
-            background-position: center;
-            height: 200px;
-            background-color: white;
-        }
-        .contenido {
-            padding: 20px;
-            max-width: 900px;
-            margin: auto;
-            background-color: white;
-            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
-        }
-        .imagen-auto {
-            display: block;
-            max-width: 100%;
-            height: auto;
-            margin: 30px auto;
+        .pantalla { display: none; padding: 40px; text-align: center; }
+        .visible { display: block; }
+        .boton {
+            padding: 12px 24px;
+            margin-top: 20px;
+            font-size: 1em;
             border-radius: 10px;
+            border: none;
+            background-color: #1e90ff;
+            color: white;
+            cursor: pointer;
         }
-        .seccion {
-            margin-bottom: 30px;
+        .logos { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin-top: 40px; }
+        .logos img {
+            width: 130px;
+            height: 130px;
+            object-fit: contain;
+            background-color: white;
+            border-radius: 20px;
+            padding: 10px;
+            cursor: pointer;
         }
-        h2 {
-            color: #222;
-            margin-bottom: 10px;
-        }
-        p {
-            color: #444;
-            margin: 0;
-        }
+        .info { max-width: 800px; margin: auto; }
+        .info img { width: 100%; max-height: 300px; object-fit: cover; border-radius: 15px; }
+        .datos { text-align: left; margin-top: 20px; }
+        .datos h3 { color: #00d0ff; margin-bottom: 5px; }
     </style>
 </head>
 <body>
 
-    <div class="logo-fondo"></div>
+<div id="bienvenida" class="pantalla visible">
+    <h1>Bienvenido a Motorapp</h1>
+    <img src="/static/carro.jpg" style="width: 100%; height: 50vh; object-fit: cover;">
+    <p>Explora marcas de autos y conoce más sobre ellas.</p>
+    <button class="boton" onclick="mostrar('marcas')">Ir a marcas</button>
+</div>
 
-    <div class="contenido">
-        <img class="imagen-auto" src="{{ url_for('static', filename=marca + '_auto.jpg') }}" alt="Imagen del auto de {{ marca|capitalize }}">
-
-        <div class="seccion">
-            <h2>Velocidad máxima</h2>
-            <p>{{ velocidad }}</p>
-        </div>
-
-        <div class="seccion">
-            <h2>Capacidad</h2>
-            <p>{{ capacidad }}</p>
-        </div>
-
-        <div class="seccion">
-            <h2>Información general</h2>
-            <p>{{ info }}</p>
-        </div>
-
-        <div class="seccion">
-            <h2>Ventas globales</h2>
-            <p>{{ ventas }}</p>
-        </div>
+<div id="marcas" class="pantalla">
+    <h1>Selecciona una marca</h1>
+    <div class="logos">
+        <img src="/static/volkswagen_logo.png" onclick="mostrarMarca('volkswagen')">
+        <img src="/static/toyota_logo.png" onclick="mostrarMarca('toyota')">
+        <img src="/static/lamborghini_logo.png" onclick="mostrarMarca('lamborghini')">
+        <img src="/static/ferrari_logo.png" onclick="mostrarMarca('ferrari')">
+        <img src="/static/ford_logo.png" onclick="mostrarMarca('ford')">
+        <img src="/static/chevrolet_logo.png" onclick="mostrarMarca('chevrolet')">
+        <img src="/static/pagani_logo.png" onclick="mostrarMarca('pagani')">
+        <img src="/static/bugatti_logo.png" onclick="mostrarMarca('bugatti')">
     </div>
+</div>
 
+<div id="info" class="pantalla">
+    <div class="info">
+        <img id="imagenAuto" src="">
+        <div class="datos">
+            <h3>Velocidad:</h3><p id="velocidad"></p>
+            <h3>Capacidad:</h3><p id="capacidad"></p>
+            <h3>Ventas:</h3><p id="ventas"></p>
+            <h3>Información general:</h3><p id="infoGeneral"></p>
+        </div>
+        <button class="boton" onclick="mostrar('marcas')">Volver</button>
+    </div>
+</div>
+
+<script>
+const datosMarca = {
+    volkswagen: {
+        auto: "/static/volkswagen.jpg",
+        velocidad: "210 km/h",
+        capacidad: "5 personas",
+        ventas: "6 millones/año",
+        info: "Volkswagen fue fundada en 1937 en Alemania."
+    },
+    toyota: {
+        auto: "/static/toyota.jpg",
+        velocidad: "180 km/h",
+        capacidad: "5 personas",
+        ventas: "Líder mundial 2023",
+        info: "Toyota fue fundada por Kiichiro Toyoda en Japón."
+    },
+    lamborghini: {
+        auto: "/static/lamborghini.jpg",
+        velocidad: "350 km/h",
+        capacidad: "2 personas",
+        ventas: "8.405 unidades en 2023",
+        info: "Lamborghini fue fundada en 1963 por Ferruccio Lamborghini."
+    },
+    ferrari: {
+        auto: "/static/ferrari.jpg",
+        velocidad: "340 km/h",
+        capacidad: "2 personas",
+        ventas: "13.221 unidades en 2023",
+        info: "Ferrari fue fundada por Enzo Ferrari en 1947."
+    },
+    ford: {
+        auto: "/static/ford.jpg",
+        velocidad: "200 km/h",
+        capacidad: "5 personas",
+        ventas: "4 millones/año",
+        info: "Ford fue fundada por Henry Ford en 1903."
+    },
+    chevrolet: {
+        auto: "/static/chevrolet.jpg",
+        velocidad: "220 km/h",
+        capacidad: "5 personas",
+        ventas: "2.3 millones en 2023",
+        info: "Chevrolet es una división de General Motors fundada en 1911."
+    },
+    pagani: {
+        auto: "/static/pagani.jpg",
+        velocidad: "383 km/h",
+        capacidad: "2 personas",
+        ventas: "Muy pocos modelos exclusivos",
+        info: "Pagani fue fundada por Horacio Pagani. Modelos famosos: Zonda, Huayra."
+    },
+    bugatti: {
+        auto: "/static/bugatti.jpg",
+        velocidad: "420 km/h",
+        capacidad: "2 personas",
+        ventas: "Modelos muy limitados",
+        info: "Bugatti fue fundada por Ettore Bugatti. Famosos: Veyron, Chiron."
+    }
+};
+
+function mostrar(id) {
+    document.querySelectorAll('.pantalla').forEach(p => p.classList.remove('visible'));
+    document.getElementById(id).classList.add('visible');
+}
+
+function mostrarMarca(marca) {
+    const data = datosMarca[marca];
+    document.getElementById("imagenAuto").src = data.auto;
+    document.getElementById("velocidad").innerText = data.velocidad;
+    document.getElementById("capacidad").innerText = data.capacidad;
+    document.getElementById("ventas").innerText = data.ventas;
+    document.getElementById("infoGeneral").innerText = data.info;
+    mostrar("info");
+}
+</script>
 </body>
 </html>
