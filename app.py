@@ -138,7 +138,7 @@ template_html = """
     <h1>Selecciona una marca</h1>
     <div class="logos">
         {% for marca in marcas %}
-        <img src="/static/{{marca}}.png" onclick="mostrarMarca('{{marca}}')">
+        <img src="/static/{{marca}}_logo.png" onclick="mostrarMarca('{{marca}}')">
         {% endfor %}
     </div>
 </div>
@@ -172,7 +172,6 @@ const datosMarca = {
     pagani: { auto: "/static/pagani.jpg", velocidad: "383 km/h", capacidad: "2 personas", ventas: "Muy pocos", info: "Zonda y Huayra." },
     bugatti: { auto: "/static/bugatti.jpg", velocidad: "420 km/h", capacidad: "2 personas", ventas: "Limitados", info: "Veyron y Chiron." }
 };
-
 
 function mostrar(id) {
     document.querySelectorAll('.pantalla').forEach(p => p.classList.remove('visible'));
