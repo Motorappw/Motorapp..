@@ -45,8 +45,7 @@ def login():
         <h2>Iniciar sesión</h2>
         <input type="text" name="email" placeholder="Correo" required><br><br>
         <input type="password" name="password" placeholder="Contraseña" required><br><br>
-        <button type="submit">Ingresar</button>
-        <br><br>
+        <button type="submit">Ingresar</button><br><br>
         <a href="/register">¿No tienes cuenta? Regístrate</a>
     </form>
     '''
@@ -68,8 +67,7 @@ def register():
         <h2>Registrarse</h2>
         <input type="text" name="email" placeholder="Correo" required><br><br>
         <input type="password" name="password" placeholder="Contraseña" required><br><br>
-        <button type="submit">Registrar</button>
-        <br><br>
+        <button type="submit">Registrar</button><br><br>
         <a href="/login">¿Ya tienes cuenta? Inicia sesión</a>
     </form>
     '''
@@ -84,4 +82,5 @@ if __name__ == "__main__":
     with app.app_context():
         db.create_all()
     port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(debug=True)
+
