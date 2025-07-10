@@ -87,9 +87,15 @@
 </div>
 
 <div id="top-right-buttons">
-    <a href="/logout">Cerrar sesión</a>
+    {% if not current_user.is_authenticated %}
+        <a href="/login">Iniciar sesión</a>
+        <a href="/register">Registrarse</a>
+    {% else %}
+        <a href="/logout">Cerrar sesión</a>
+    {% endif %}
 </div>
 
+{% if current_user.is_authenticated %}
 <div id="botonInicio">
     <button class="boton" onclick="mostrar('bienvenida')">Inicio</button>
 </div>
@@ -105,7 +111,7 @@
     <h1>Selecciona una marca</h1>
     <div class="logos">
         {% for marca in marcas %}
-        <img src="/static/{{marca}}_logo.png" onclick="mostrarMarca('{{marca}}')">
+        <img src="/static/{{marca}}.png" onclick="mostrarMarca('{{marca}}')">
         {% endfor %}
     </div>
 </div>
@@ -122,6 +128,11 @@
         <button class="boton" onclick="mostrar('marcas')">Volver</button>
     </div>
 </div>
+{% else %}
+<div style="text-align:center; padding: 80px;">
+    <h2>Debes iniciar sesión para ver el contenido de Motorapp 🚗🔒</h2>
+</div>
+{% endif %}
 
 <script>
 const datosMarca = {

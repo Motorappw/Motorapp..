@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 import os
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
 app.secret_key = 'motorapp_secreta'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 db = SQLAlchemy(app)
@@ -12,24 +12,29 @@ login_manager = LoginManager()
 login_manager.login_view = 'login'
 login_manager.init_app(app)
 
+# Modelo de usuario
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(150), unique=True)
     password = db.Column(db.String(150))
 
+# Crear la base de datos si no existe
 with app.app_context():
     db.create_all()
 
+# Cargar usuario para sesión
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+# Ruta principal
 @app.route("/")
 @login_required
 def index():
     marcas = ["volkswagen", "toyota", "lamborghini", "ferrari", "ford", "chevrolet", "pagani", "bugatti"]
     return render_template("informacion.html", marcas=marcas)
 
+# Ruta de login
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -50,6 +55,7 @@ def login():
     </form>
     '''
 
+# Ruta de registro
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
@@ -72,15 +78,18 @@ def register():
     </form>
     '''
 
+# Ruta de logout
 @app.route("/logout")
 @login_required
 def logout():
     logout_user()
     return redirect(url_for("login"))
 
+# Ejecutar aplicación
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
     port = int(os.environ.get("PORT", 5000))
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=port)
+
 
