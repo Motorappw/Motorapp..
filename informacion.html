@@ -2,62 +2,71 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Información de la Marca</title>
+    <title>Información de {{ marca|capitalize }}</title>
     <style>
         body {
             margin: 0;
-            padding: 0;
-            background-color: #111;
-            color: white;
             font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
         }
         .logo-fondo {
-            width: 100%;
-            height: 200px;
-            background-size: contain;
+            background-image: url("{{ url_for('static', filename=marca + '.png') }}");
             background-repeat: no-repeat;
+            background-size: contain;
             background-position: center;
+            height: 200px;
+            background-color: white;
         }
-        .info-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        .contenido {
             padding: 20px;
+            max-width: 900px;
+            margin: auto;
+            background-color: white;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
         }
-        .imagen-marca {
-            width: 300px;
-            margin-bottom: 20px;
-        }
-        .detalle-info {
-            text-align: left;
-            width: 80%;
-            background-color: #222;
-            padding: 20px;
+        .imagen-auto {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            margin: 30px auto;
             border-radius: 10px;
         }
-        .detalle-info h2 {
-            margin-top: 0;
-            color: #00ffcc;
+        .seccion {
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #222;
+            margin-bottom: 10px;
+        }
+        p {
+            color: #444;
+            margin: 0;
         }
     </style>
 </head>
 <body>
 
-    <div class="logo-fondo" style="background-image: url('{{ url_for('static', filename=logo_fondo) }}');"></div>
+    <div class="logo-fondo"></div>
 
-    <div class="info-container">
-        <img class="imagen-marca" src="{{ url_for('static', filename=logo_imagen) }}" alt="Imagen de la marca">
+    <div class="contenido">
+        <img class="imagen-auto" src="{{ url_for('static', filename=marca + '_auto.jpg') }}" alt="Imagen del auto de {{ marca|capitalize }}">
 
-        <div class="detalle-info">
+        <div class="seccion">
             <h2>Velocidad máxima</h2>
             <p>{{ velocidad }}</p>
+        </div>
 
+        <div class="seccion">
             <h2>Capacidad</h2>
             <p>{{ capacidad }}</p>
+        </div>
 
+        <div class="seccion">
             <h2>Información general</h2>
-            <p>{{ info_general }}</p>
+            <p>{{ info }}</p>
+        </div>
 
+        <div class="seccion">
             <h2>Ventas globales</h2>
             <p>{{ ventas }}</p>
         </div>
