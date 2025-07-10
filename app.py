@@ -1,6 +1,7 @@
 from flask import Flask, render_template_string, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+import os
 
 app = Flask(__name__)
 app.secret_key = 'motorapp_secreta'
@@ -126,7 +127,6 @@ template_html = """
     <button class="boton" onclick="mostrar('bienvenida')">Inicio</button>
 </div>
 
-<!-- PANTALLAS: bienvenida, marcas, info -->
 <div id="bienvenida" class="pantalla visible">
     <h1 id="saludo">Bienvenido a Motorapp</h1>
     <img src="/static/carro.jpg" style="width: 100%; height: 50vh; object-fit: cover;">
@@ -137,14 +137,9 @@ template_html = """
 <div id="marcas" class="pantalla">
     <h1>Selecciona una marca</h1>
     <div class="logos">
-        <img src="/static/volkswagen.png" onclick="mostrarMarca('volkswagen')">
-        <img src="/static/toyota.png" onclick="mostrarMarca('toyota')">
-        <img src="/static/lamborghini.png" onclick="mostrarMarca('lamborghini')">
-        <img src="/static/ferrari.png" onclick="mostrarMarca('ferrari')">
-        <img src="/static/ford.png" onclick="mostrarMarca('ford')">
-        <img src="/static/chevrolet.png" onclick="mostrarMarca('chevrolet')">
-        <img src="/static/pagani.png" onclick="mostrarMarca('pagani')">
-        <img src="/static/bugatti.png" onclick="mostrarMarca('bugatti')">
+        {% for marca in marcas %}
+        <img src="/static/{{marca}}.png" onclick="mostrarMarca('{{marca}}')">
+        {% endfor %}
     </div>
 </div>
 
@@ -217,8 +212,10 @@ function cambiarNombre() {
 """
 
 @app.route("/")
+@login_required
 def index():
-    return render_template_string(template_html)
+    marcas = ["volkswagen", "toyota", "lamborghini", "ferrari", "ford", "chevrolet", "pagani", "bugatti"]
+    return render_template_string(template_html, marcas=marcas)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -230,16 +227,7 @@ def login():
             login_user(user)
             return redirect(url_for("index"))
         return "Credenciales incorrectas"
-    return '''
-    <form method="post">
-        <h2>Iniciar sesión</h2>
-        <input type="text" name="email" placeholder="Correo" required><br><br>
-        <input type="password" name="password" placeholder="Contraseña" required><br><br>
-        <button type="submit">Ingresar</button>
-        <br><br>
-        <a href="/register">¿No tienes cuenta? Regístrate</a>
-    </form>
-    '''
+    return '''<form method="post"><h2>Iniciar sesión</h2><input type="text" name="email" placeholder="Correo" required><br><br><input type="password" name="password" placeholder="Contraseña" required><br><br><button type="submit">Ingresar</button><br><br><a href="/register">¿No tienes cuenta? Regístrate</a></form>'''
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -253,23 +241,13 @@ def register():
         db.session.commit()
         login_user(new_user)
         return redirect(url_for("index"))
-    return '''
-    <form method="post">
-        <h2>Registrarse</h2>
-        <input type="text" name="email" placeholder="Correo" required><br><br>
-        <input type="password" name="password" placeholder="Contraseña" required><br><br>
-        <button type="submit">Registrar</button>
-        <br><br>
-        <a href="/login">¿Ya tienes cuenta? Inicia sesión</a>
-    </form>
-    '''
+    return '''<form method="post"><h2>Registrarse</h2><input type="text" name="email" placeholder="Correo" required><br><br><input type="password" name="password" placeholder="Contraseña" required><br><br><button type="submit">Registrar</button><br><br><a href="/login">¿Ya tienes cuenta? Inicia sesión</a></form>'''
 
 @app.route("/logout")
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for("index"))
-import os
+    return redirect(url_for("login"))
 
 if __name__ == "__main__":
     with app.app_context():
